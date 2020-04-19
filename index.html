@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>LaunchDarkly Goat Toggle</title>
+    <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
+  </head>
+  <body>
+    <h1>The Bestest LaunchDarkly Goat Toggle Ever</h1>
+    <script>
+      var user = {
+        "firstName": "Sara",
+        "lastName": "Mazer",
+        "key": "sara@example.com",
+        "ip": "100.15.85.174",
+        "custom": {
+          "groups": "beta_testers"
+        }
+      };
+
+      var div = document.createElement("div");
+      document.body.appendChild(div);
+      
+      div.appendChild(document.createTextNode('Initializing...'));
+
+      var ldclient = LDClient.initialize('my-test-env-key', user);
+      
+      function render() {
+        var shouldShow = ldclient.variation("goat-toggle", false);
+        var img = document.createElement('img');
+        if(shouldShow) {
+           img.src = "goatsintrees.jpg";
+
+        } else {
+           img.src = "goat1.jpg";
+       }
+        //document.getElementById('body').appendChild(img);
+        div.replaceChild(img, div.firstChild);
+
+      }
+      
+      ldclient.on('ready', render);
+      ldclient.on('change', render);
+    </script>
+  </body>
+</html>

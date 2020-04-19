@@ -1,0 +1,14 @@
+{
+  "name": "sites",
+  "version": "1.0.0",
+  "description": "sites test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "launchdarkly-js-client-sdk": "^2.17.3"
+  }
+}
