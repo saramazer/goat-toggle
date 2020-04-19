@@ -4,17 +4,26 @@
     <meta charset="utf-8">
     <title>LaunchDarkly Goat Toggle</title>
     <script src="https://unpkg.com/launchdarkly-js-client-sdk@2"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
     <h1>The Bestest LaunchDarkly Goat Toggle Ever</h1>
     <script>
+      var devicetype = "";
+      if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/.test(navigator.userAgent) ) 
+      {
+        devicetype = "mobile";
+      }
+      else {
+       devicetype = "desktop";
+      }
       var user = {
         "firstName": "Sara",
         "lastName": "Mazer",
         "key": "sara@example.com",
         "ip": "100.15.85.174",
         "custom": {
-          "groups": "beta_testers"
+          "groups": devicetype 
         }
       };
 
@@ -23,22 +32,18 @@
       
       div.appendChild(document.createTextNode('Initializing...'));
 
-      var ldclient = LDClient.initialize('my-test-env-key', user);
+      var ldclient = LDClient.initialize('my-key', user);
       
       function render() {
         var shouldShow = ldclient.variation("goat-toggle", false);
         var img = document.createElement('img');
         if(shouldShow) {
            img.src = "goatsintrees.jpg";
-
-        } else {
+         } else {
            img.src = "goat1.jpg";
        }
-        //document.getElementById('body').appendChild(img);
-        div.replaceChild(img, div.firstChild);
-
+      div.replaceChild(img, div.firstChild);
       }
-      
       ldclient.on('ready', render);
       ldclient.on('change', render);
     </script>
